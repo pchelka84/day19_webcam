@@ -32,10 +32,19 @@ function paintToCanvas() {
 }
 
 function takePhoto() {
+  // play the sound
   snap.curreTime = 0;
   snap.play();
+
+  // Take the data out of the canvas
+  const data = canvas.toDataURL('image/jpeg');
+  const link = document.createElement('a');
+  link.href = data;
+  link.setAttribute('download', 'pretty');
+  link.innerHTML = `<img src="${data}" alt="Just me" />`;
+  strip.insertBefore(link, strip.firstChild);
 }
 
 getVideo(); 
 
-
+video.addEventListener('canplay', paintToCanvas);
