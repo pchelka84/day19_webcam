@@ -9,7 +9,6 @@ function getVideo() {
   .then(localMediaStream => {
     console.log(localMediaStream);
     // convert videoStream into something that video playercan understand
-    // video.src = window.URL.createObjectURL(localMediaStream);
     video.srcObject = localMediaStream;
     video.play();
   })
@@ -28,6 +27,12 @@ function paintToCanvas() {
 
   return setInterval(() => {
     ctx.drawImage(video, 0, 0, width, height);
+    // Take the pixels out of canvas
+    let pixels = ctx.getImageData(0, 0, width, height);
+    // Mess with pixels
+    pixels = redEffect(pixels);
+    // Put pixels back
+    ctx.putImageData(pixels, 0, 0)
   }, 16)
 }
 
@@ -43,6 +48,15 @@ function takePhoto() {
   link.setAttribute('download', 'pretty');
   link.innerHTML = `<img src="${data}" alt="Just me" />`;
   strip.insertBefore(link, strip.firstChild);
+}
+
+function redEffect(pixels) {
+ for (let i = 0; i < pixels.data.length; i+=4) {
+   pixels.data[i + 0] = pixels.data[i + 0] + 100 // red
+   pixels.data[i + 1] = pixels.data[i + 1] - 77 // green
+   pixels.data[i + 2] = pixels.data[i + 1] * 0.7 //blue
+ }
+ return pixels;
 }
 
 getVideo(); 
