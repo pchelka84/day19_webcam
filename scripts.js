@@ -31,4 +31,11 @@ function paintToCanvas() {
   }, 16)
 }
 
+function takePhoto() {
+  snap.curreTime = 0;
+  snap.play();
+}
+
 getVideo(); 
+
+
