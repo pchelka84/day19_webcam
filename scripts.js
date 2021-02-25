@@ -18,4 +18,17 @@ function getVideo() {
   })
 }
 
-getVideo();
+function paintToCanvas() {
+  const width = video.videoWidth;
+  const height = video.videoHeight;
+  console.log(width, height);
+  // Make sure video and canvas are the same size
+  canvas.width = width;
+  canvas.height = height;
+
+  setInterval(() => {
+    ctx.drawImage(video, 0, 0, width, height);
+  }, 16)
+}
+
+getVideo(); 
